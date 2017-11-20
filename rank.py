@@ -28,9 +28,9 @@ def search():
 	urls = query["query"]
 
 	#todo: figure out the actual url of link analysis
-	urlLinkAnalysis = 'todo: url goes here'
-	urlLocalHost = '/test'
-	urlsRequest = urls
+	url_link_analysis = 'todo: url goes here'
+	url_localHost = '/test'
+	urls_request = urls
 	headers = {"Content-Type": "application/json"}
 
 	#todo: instead of returning dummy text, return what we get
@@ -39,6 +39,16 @@ def search():
 
 	#r = requests.post('https://localhost:5000/test', data=json.dumps(urlsRequest), headers=headers, timeout=1.000)
 	#requests.get('https://localhost:5000/test', timeout=1.000)
+
+	#Turn all query content into one big set to send to indexing
+	index_request = jsonify(set(query["query"] + query["ngrams"] + query["aliases"]))
+
+	#POST request to indexing to retreive inverted index for specified words
+	inverted_index_json = requests.post('https://placeholderindexteamurl.rpi.edu', data=json.dumps(index_request), headers=headers, timeout=1.000)
+
+	#Dump received json to dictionary with the same format
+	inverted_index = {}
+	json.dump(inverted_index,inverted_index_json)
 
 	return query["query"]
 
