@@ -50,8 +50,17 @@ def search():
 	inverted_index = {}
 	json.dump(inverted_index,inverted_index_json)
 
+	error_code = requests.post("https://localhost:5000/test",data=json.dumps(inverted_index_json),headers=headers,timeout=1.000)
+	print(error_code)
+
 	return query["query"]
 
+@app.route('/test/', methods=['POST'])
+def test():
+	inverted_index = request.json
+	print inverted_index
+
+	return inverted_index["returnCode"]
 
 if __name__ == '__main__':
 	app.run(debug=True)
