@@ -44,10 +44,10 @@ def search():
 	#requests.get('https://localhost:5000/test', timeout=1.000)
 
 	#Turn all query content into one big set to send to indexing
-	the_set = set([query["query"], query["ngrams"], query["aliases"]])
 
 	index_request = json.dumps(set([query["query"], query["ngrams"], query["aliases"]]), cls=SetEncoder)
-	jj = jsonify(index_request)
+	json_index_request = jsonify(index_request)
+
 
 	#POST request to indexing to retreive inverted index for specified words
 	# inverted_index_json = requests.post('https://placeholderindexteamurl.rpi.edu', data=json.dumps(index_request), headers=headers, timeout=1.000)
@@ -58,11 +58,12 @@ def search():
 	# error_code = requests.post("https://localhost:5000/test",data=json.dumps(inverted_index_json),headers=headers,timeout=1.000)
 	# print(error_code)
 
-	return index_request
+	return json_index_request
+
 
 @app.route('/test', methods=['POST'])
 def test():
-	
+
 	# prints out the entire json
 	print(request.json)
 
