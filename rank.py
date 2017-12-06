@@ -8,7 +8,6 @@ received_queries = []
 
 # curl -H 'Content-Type: application/json' -X POST -d '{"query":"this query","ngrams":"this gram","aliases":"this alias"}' http://localhost:5000/ranking/
 
-
 @app.route('/ranking', methods=['POST'])
 def search():
 	#if post request is empty or incorrect, abort
