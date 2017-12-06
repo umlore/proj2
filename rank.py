@@ -8,17 +8,14 @@ received_queries = []
 
 # curl -H 'Content-Type: application/json' -X POST -d '{"query":"this query","ngrams":"this gram","aliases":"this alias"}' http://localhost:5000/ranking/
 
-class SetEncoder(json.JSONEncoder):
-	def default(self, obj):
-		if isinstance(obj, set):
-			return list(obj)
-		return json.JSONEncoder.default(self, obj)
 
 @app.route('/ranking', methods=['POST'])
 def search():
 	#if post request is empty or incorrect, abort
 	if not request.json or not 'query' in request.json:
 		return "Somthing Missing\n"
+
+	print(request.url)
 
 	#parse json query
 	query = {
@@ -31,7 +28,6 @@ def search():
 	#todo: remove
 	# received_queries.append(query);
 
-	#compile list of urls to get data from, based on comparison 
 	urls = query["query"]
 
 	#todo: figure out the actual url of link analysis
@@ -45,8 +41,14 @@ def search():
 
 	#Turn all query content into one big set to send to indexing
 
-	index_request = json.dumps(set([query["query"], query["ngrams"], query["aliases"]]), cls=SetEncoder)
-	json_index_request = jsonify(index_request)
+	theSet = set(query["query"] + query["ngrams"] + query["aliases"])
+	newList = list(theSet)
+
+	# index_request = json.dumps(newList)
+	# print(index_request)
+
+	json_index_request = jsonify(newList)
+	print(json_index_request)
 
 
 	#POST request to indexing to retreive inverted index for specified words
@@ -70,4 +72,4 @@ def test():
 	return "hello\n"
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=True,host="0.0.0.0")
