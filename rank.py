@@ -14,13 +14,13 @@ def search():
 
 	#parse json query
 	query = {
-		"query": request.json["query"],
-		"ngrams": request.json["ngrams"],
-		"aliases": request.json["aliases"],
+		"search_id": request.json["search_id"],
+		"raw": request.json["raw"],
+		"transformed": request.json["transformed"],
 	}
 
 
-	urls = query["query"]
+	raw_tokens = query["raw"]["raw_tokens"]
 
 	#todo: figure out the actual url of link analysis
 	# url_link_analysis = 'todo: url goes here'
@@ -33,13 +33,14 @@ def search():
 
 	#Turn all query content into one big set to send to indexing
 
-	query_set = set(query["query"] + query["ngrams"] + query["aliases"])
-	query_set_list = list(query_set)
+	#TODO: figure out what to use other than just raw_tokens
+	#query_set = set(query["query"] + query["ngrams"] + query["aliases"])
+	#query_set_list = list(query_set)
 
-	print(query_set_list)
+	print(raw_tokens)
 
 	#TODO: confirm tokens is the correct key for this data
-	index_json_request = jsonify({"tokens": query_set_list})
+	index_json_request = jsonify({"tokens": raw_tokens})
 	
 	#POST request to indexing to retreive inverted index for specified words
 	#TODO: figure out what the actual teamy endpoint is OR fuckin interface with a diff team
@@ -59,7 +60,7 @@ def search():
 	# error_code = requests.post("https://localhost:5000/test",data=json.dumps(inverted_index_json),headers=headers,timeout=1.000)
 	# print(error_code)
 
-	webpages = ["https://eatmyass.com"] #TODO: generate this from the results of the 
+	webpages = ["https://business.zone"] #TODO: generate this from the results of the 
 		#post to indexing from inverted_index_json
 
 	page_rank_request = jsonify({"webpages": webpages})
