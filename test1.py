@@ -11,6 +11,6 @@ inverted_index_json = requests.post('http://teamthorn.cs.rpi.edu:5000/ranking', 
 print(json.loads(inverted_index_json.content))
 
 f = open('testing.txt','w')
-f.write(json.loads(inverted_index_json.content))
+f.write(json.loads(inverted_index_json.text))
 
 f.close()
