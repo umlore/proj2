@@ -52,7 +52,7 @@ f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict)
 # ==============================
 #Create dummy data (dictionary) and jsonify
 query_dict = {
-   'search_id': 123,
+   'search_id': None,
    'raw':
    {
        'raw_search': "",
