@@ -36,7 +36,7 @@ query_dict = {
    }
 }
 
-json_query = jsonify(query_dict)
+json_query = json.dumps(query_dict)
 
 #Pass it into the parsing method
 parse_query_result = parseQueryJson(json_query)
@@ -67,7 +67,7 @@ query_dict = {
    }
 }
 
-json_query = jsonify(query_dict)
+json_query = json.dumps(query_dict)
 
 #Pass it into the parsing method
 parse_query_result = parseQueryJson(json_query)
@@ -78,5 +78,17 @@ json_equals_dict = query_dict == parse_query_result
 #Write pass/fail results to output file
 f.write("----- Test 2 -----\nTest Passed: %r\n" % json_equals_dict) 
 
+# ==============================
+#TEST 3: Testing an empty input
+# ==============================
+
+#Pass it into the parsing method
+parse_query_result = parseQueryJson(None)
+
+#Compare output to original input dictionary to make sure they are the same
+json_equals_dict = None == parse_query_result
+
+#Write pass/fail results to output file
+f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict) 
 
 f.close()
