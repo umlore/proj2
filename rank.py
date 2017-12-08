@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 def parseTerms(query):
-	#do something here
+    #do something here
 
 def rankUrls(query, page_ranks, index):
 	#do something here
@@ -68,7 +68,7 @@ def search():
 		#which is the querying request
 	
 
-	dummyReturn = {
+	dummy_return = {
 		"ID": 69,
 	    "ranking": [
 			{ 
@@ -89,7 +89,7 @@ def search():
 		]
 	}
 
-	return jsonify(dummyReturn)
+	return jsonify(dummy_return)
 
 
 @app.route('/test', methods=['POST'])
