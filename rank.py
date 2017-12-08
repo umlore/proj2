@@ -4,29 +4,39 @@ import json
 
 app = Flask(__name__)
 
-def parseTerms(query):
-	#do something here
-
-def rankUrls(query, page_ranks, index):
-	#do something here
-
-@app.route('/ranking', methods=['POST'])
-def search():
+def parseQueryJson(query_json):
 	#if post request is empty or incorrect, abort
-	if not request.json or not 'raw' in request.json:
-		return "Somthing Missing\n"
-
-	print(request.url)
+	if not query_json or not 'raw' in query_json:
+		return None;
 
 	#parse json query
 	query = {
-		"search_id": request.json["search_id"],
-		"raw": request.json["raw"],
-		"transformed": request.json["transformed"],
+		"search_id": query_json["search_id"],
+		"raw": query_json["raw"],
+		"transformed": query_json["transformed"],
 	}
 
+	return query
 
-	raw_tokens = query["raw"]["raw_tokens"]
+def parseIndexTermsFromQuery(query):
+	index_query = list(set(query["transformed"]["transformed_tokens"] + 
+		query["transformed"]["transformed_bigrams"] + 
+		query["transformed"]["transformed_trigrams"]))
+	return index_query
+
+def rankUrls(query, page_ranks, index):
+	#do something here
+	return None
+
+@app.route('/ranking', methods=['POST'])
+def search():
+	query = parseQueryJson(request.json)
+	if query == None:
+		return "Error: query not parseable"
+
+	print(request.url)
+
+	raw_tokens = parseIndexTermsFromQuery(query)
 
 	#todo: figure out the actual url of link analysis
 	# url_link_analysis = 'todo: url goes here'
