@@ -4,6 +4,12 @@ import json
 
 app = Flask(__name__)
 
+def parseTerms(query):
+	#do something here
+
+def rankUrls(query, page_ranks, index):
+	#do something here
+
 @app.route('/ranking', methods=['POST'])
 def search():
 	#if post request is empty or incorrect, abort
