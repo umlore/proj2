@@ -24,6 +24,21 @@ def parseIndexTermsFromQuery(query):
 		query["transformed"]["transformed_trigrams"]))
 	return index_query
 
+def parseJsonFromIndex(index_json):
+	index = {
+		"returnCode":index_json["returnCode"],
+		"error":index_json["error"],
+		"documents":index_json["documents"],
+		"tokens":index_json["tokens"]
+	}
+	return index
+
+def parseJsonFromLinkAnalysis(page_ranks_json):
+	page_ranks = {
+		"webpages": page_ranks_json["webpages"]
+	}
+	return page_ranks
+
 def rankUrls(query, page_ranks, index):
 	#do something here
 	return None
