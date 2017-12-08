@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/ranking', methods=['POST'])
 def search():
 	#if post request is empty or incorrect, abort
-	if not request.json or not 'query' in request.json:
+	if not request.json or not 'raw' in request.json:
 		return "Somthing Missing\n"
 
 	print(request.url)
