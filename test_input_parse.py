@@ -9,10 +9,13 @@ from rank import parseQueryJson, parseIndexTermsFromQuery
 #Calls will be made directly from rank.py functions ignoring POST and GET calls
 
 '''
-THIS TEST IS FOR TESTING THE parseQueryJson METHOD
+THIS TEST BLOCK IS FOR TESTING THE parseQueryJson METHOD
 
 '''
+f = open('testing_input_parse.txt','w')
+f.write("RESULTS FOR TESTING parseQueryJson: \n")
 
+#TEST 1: Testing basic query
 #Create dummy data (dictionary) and jsonify
 query_dict = {
    'search_id': 123,
@@ -39,8 +42,7 @@ parse_query_result = parseQueryJson(json_query)
 json_equals_dict = query_dict == parse_query_result
 
 #Write pass/fail results to output file
-f = open('testing_input_parse.txt','w')
-f.write("RESULTS FOR TESTING parseQueryJson: \n")
-f.write("Test Passed: %r\n" % json_equals_dict) 
+f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict) 
+
 
 f.close()
