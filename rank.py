@@ -44,9 +44,6 @@ def search():
 	# urls_request = urls
 	headers = {"Content-Type": "application/json"}
 
-	#r = requests.post('https://localhost:5000/test', data=json.dumps(urlsRequest), headers=headers, timeout=1.000)
-	#requests.get('https://localhost:5000/test', timeout=1.000)
-
 	#Turn all query content into one big set to send to indexing
 
 	#TODO: figure out what to use other than just raw_tokens
@@ -67,30 +64,21 @@ def search():
 	inverted_index_json = requests.post('https://teamy.cs.rpi.edu/index', data=index_json_request, headers=headers, timeout=1.000)
 
 	'''
-	
 
-
-	#Dump received json to dictionary with the same format
-	# json.dump(inverted_index,inverted_index_json)
-
-	# error_code = requests.post("https://localhost:5000/test",data=json.dumps(inverted_index_json),headers=headers,timeout=1.000)
-	# print(error_code)
-
-	webpages = ["https://business.zone"] #TODO: generate this from the results of the 
-		#post to indexing from inverted_index_json
+	webpages = ["https://business.zone"] 
+	#TODO: generate this from the results of the post to indexing from inverted_index_json
 
 	page_rank_request = jsonify({"webpages": webpages})
 
 	'''
 	page_rank_json = requests.post('https://teamqq.cs.rpi.edu/pageRank', data=page_rank_request, headers=headers, timeout=1.000)
 	'''
-
-	#page_rank_result = request.json["webpages"] 
+	
 	#TODO: page_rank_request should be parsed from page_rank_json not request.json
 		#which is the querying request
 	
 
-	dummyReturn = {
+	dummy_return = {
 		"ID": 69,
 	    "ranking": [
 			{ 
@@ -111,7 +99,7 @@ def search():
 		]
 	}
 
-	return jsonify(dummyReturn)
+	return jsonify(dummy_return)
 
 
 @app.route('/test', methods=['POST'])
