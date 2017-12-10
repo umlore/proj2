@@ -17,9 +17,10 @@ THIS TEST BLOCK IS FOR TESTING THE parseQueryJson METHOD
 f.write("RESULTS FOR TESTING parseQueryJson: \n")
 
 # ==============================
-#TEST 1: Testing basic query
-#Create dummy data (dictionary) and jsonify
+# TEST 1: Testing basic query 
 # ==============================
+
+# Create dummy data (dictionary)
 query_dict = {
    'search_id': 123,
    'raw':
@@ -36,7 +37,7 @@ query_dict = {
    }
 }
 
-json_query = json.dumps(query_dict)
+json_query = query_dict
 
 #Pass it into the parsing method
 parse_query_result = parseQueryJson(json_query)
@@ -50,7 +51,7 @@ f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict)
 # ==============================
 #TEST 2: Testing an empty query
 # ==============================
-#Create dummy data (dictionary) and jsonify
+#Create dummy data (dictionary)
 query_dict = {
    'search_id': None,
    'raw':
@@ -67,7 +68,7 @@ query_dict = {
    }
 }
 
-json_query = json.dumps(query_dict)
+json_query = query_dict
 
 #Pass it into the parsing method
 parse_query_result = parseQueryJson(json_query)
