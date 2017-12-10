@@ -19,12 +19,14 @@ def parseQueryJson(query_json):
 	return query
 
 def parseIndexTermsFromQuery(query):
-    if not query_json or not 'raw' in query_json:
-    		return None;
-		
-	index_query = list(set(query["transformed"]["transformed_tokens"] + 
-		query["transformed"]["transformed_bigrams"] + 
-		query["transformed"]["transformed_trigrams"]))
+	#if post request is empty or incorrect, abort
+	if not query or not 'raw' in query:
+		return None;
+
+	index_query = list(set(query["transformed"]["transformed_tokens"] +
+	query["transformed"]["transformed_bigrams"] + 
+	query["transformed"]["transformed_trigrams"]))
+
 	return index_query
 
 def parseJsonFromIndex(index_json):
