@@ -26,7 +26,7 @@ def parseIndexTermsFromQuery(query):
 
 def parseJsonFromIndex(index_json):
     #if post request is empty or incorrect, abort
-	if not index_json or not 'raw' in index_json:
+	if not index_json or not 'documents' in index_json:
 		return None;
 
 	index = {
@@ -39,7 +39,7 @@ def parseJsonFromIndex(index_json):
 
 def parseJsonFromLinkAnalysis(page_ranks_json):
     #if post request is empty or incorrect, abort
-	if not page_ranks_json or not 'raw' in page_ranks_json:
+	if not page_ranks_json or not 'webpages' in page_ranks_json:
 		return None;
 
 	page_ranks = {
