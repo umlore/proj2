@@ -19,6 +19,9 @@ def parseQueryJson(query_json):
 	return query
 
 def parseIndexTermsFromQuery(query):
+    if not query_json or not 'raw' in query_json:
+    		return None;
+		
 	index_query = list(set(query["transformed"]["transformed_tokens"] + 
 		query["transformed"]["transformed_bigrams"] + 
 		query["transformed"]["transformed_trigrams"]))

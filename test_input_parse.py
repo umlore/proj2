@@ -49,7 +49,7 @@ json_equals_dict = query_dict == parse_query_result
 f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict) 
 
 # ==============================
-#TEST 2: Testing an empty query
+# TEST 2: Testing an empty query
 # ==============================
 #Create dummy data (dictionary)
 query_dict = {
@@ -91,5 +91,47 @@ json_equals_dict = None == parse_query_result
 
 #Write pass/fail results to output file
 f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict) 
+
+
+
+
+'''
+THIS TEST BLOCK IS FOR TESTING THE parseIndexTermsFromQuery METHOD
+
+'''
+f.write("RESULTS FOR TESTING parseIndexTermsFromQuery: \n")
+
+# ==============================
+# TEST 1: Testing basic query 
+# ==============================
+
+# Create dummy data (dictionary)
+query_dict = {
+   'search_id': 123,
+   'raw':
+   {
+       'raw_search': "dank memes website cat .gif",
+       'raw_tokens': ["dank", "memes", "website", "cat", ".gif"]
+   },
+   'transformed':
+   {
+       'transformed_search': "dank memes website cat gif",
+       'transformed_tokens': ["dank", "memes", "website", "cat", "gif"],
+       'transformed_bigrams': ["dank memes", "memes website", "cat gif"],
+       'transformed_trigrams': ["dank memes website", "cat gif website", "meme cat website", "meme gif website"],
+   }
+}
+
+# Create expected output list to compare to
+
+
+#Pass it into the parsing method
+parse_query_result = parseQueryJson(json_query)
+
+#Compare output to expected output to make sure it's the same
+result_equals_list = query_dict == parse_query_result
+
+#Write pass/fail results to output file
+f.write("----- Test 1 -----\nTest Passed: %r\n" % result_equals_list) 
 
 f.close()
