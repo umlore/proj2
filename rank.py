@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 import requests
 import json
@@ -86,7 +87,7 @@ def rankUrls(query, page_ranks, index):
 
 	for tk in index['tokens']:
 		for occ in tk['documentOccurences']:
-			documents[occ['documentID']][tk['token']] = occ['locations']
+                        documents[occ['documentID']][tk['token']] = occ['locations']
 
 	all_adocs = []
 
@@ -94,7 +95,9 @@ def rankUrls(query, page_ranks, index):
 		temp = aDocument()
 		temp.document = key
 		for val in value:
+			print(type(val))
 			temp.total_tokens += len(val)
+                        #  temp.total_tokens += len(val)
 		all_adocs.append(temp)
 
 	#  sorted_adocs = sorted(doc, key=operator.attrgetter('total_tokens'))

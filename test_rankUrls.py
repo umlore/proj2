@@ -12,6 +12,7 @@ sys.path.append(os.path.abspath('./rankURL_test'))
 from rankURL_test1 import queries, page_rank, inverted_index
 sorted_adocs = rankUrls(queries, page_rank, inverted_index)
 for doc in sorted_adocs:
+    print(doc.total_tokens)
     print(doc.document)
 print('\n')
 
@@ -43,5 +44,6 @@ from rankURL_test5 import queries, page_rank, inverted_index
 sorted_adocs = rankUrls(queries, page_rank, inverted_index)
 for doc in sorted_adocs:
     print(doc.document)
+    print(doc.total_tokens)
 print('\n')
 #  print(sorted_adocs[0].document)
