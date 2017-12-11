@@ -12,3 +12,10 @@ Test Passed: True
 Test Passed: True
 ----- Test 3 -----
 Test Passed: True
+RESULTS FOR TESTING parseIndexTermsFromQuery: 
+----- Test 1 -----
+Test Passed: True
+----- Test 2 -----
+Test Passed: True
+----- Test 3 -----
+Test Passed: True
