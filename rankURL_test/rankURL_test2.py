@@ -36,9 +36,9 @@ page_rank = {
 }
 
 inverted_index = {
-    returnCode: 1,
-    error: NULL,
-    documents: [
+    'returnCode': 1,
+    'error': '',
+    'documents': [
         {
             'documentID': 'www.example.com',
             'wordCount': 13,

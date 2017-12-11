@@ -89,7 +89,7 @@ def rankUrls(query, page_ranks, index):
 
 	all_adocs = []
 
-	for key, value in documents:
+	for key, value in documents.items():
 		temp = aDocument()
 		temp.document = key
 		for val in value:
