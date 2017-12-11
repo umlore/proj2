@@ -1,20 +1,63 @@
 from flask import Flask, request, jsonify
 import requests
 import json
+import operator
 
 app = Flask(__name__)
 
+class aDocument:
+	document = ""
+	total_tokens = 0
+
 def parseTerms(query):
 	#do something here
+	return None
 
+# query - dic from querying team
+# result of what link analysis (check)
+# dictionary
 def rankUrls(query, page_ranks, index):
-	#do something here
+	# Check these
+		# 1. does it have all the query terms?
+		# 2. how many query terms does it match total?  including repeats?
+		# 3. adjacency: are the query terms close together?
+		# 4. multiply by some factor determined by page_rank for that url
+		# 5. come up with some way of multiplying by recency
+
+	## parse out the webpages from indexing and get list of webpages from link analysis
+	documents = {}
+	webpages = {'webpages':[]}
+
+	for doc in index['documents']:
+		webpages['webpages'].append(doc['documentID'])
+
+		## dictionary with url as key. Value is a dictionary of {<token>:[<loc>]}
+		documents[doc['documentID']] = {}
+
+
+	for tk in index['tokens']:
+		for occ in tk['documentOccurences']:
+			documents[occ['documentID']][tk['token']] = occ['locations']
+
+	all_adocs = []
+
+	for key, value in documents:
+		temp = aDocument()
+		temp.document = key
+		for val in value:
+			temp.total_tokens += len(val)
+		all_adocs.append(temp)
+
+	sorted_adocs = sorted(doc, key=operator.attrgetter('total_tokens'))
+
+	return sorted_adocs
+
 
 @app.route('/ranking', methods=['POST'])
 def search():
 	#if post request is empty or incorrect, abort
 	if not request.json or not 'raw' in request.json:
-		return "Somthing Missing\n"
+		return "Something Missing\n"
 
 	print(request.url)
 
@@ -53,12 +96,15 @@ def search():
 	
 
 	'''
-
 	inverted_index_json = requests.post('https://teamy.cs.rpi.edu/index', data=index_json_request, headers=headers, timeout=1.000)
+	'''
 
 	'''
-	
-
+	# Will need to convert json we recieve into actual structure
+	if(inverted_index_json['returnCode'] != 0):
+		print("An error occured (",inverted_index_json['error'],") with return code",inverted_index_json['returnCode'])
+		return inverted_index_json['returnCode']
+	'''
 
 	#Dump received json to dictionary with the same format
 	# json.dump(inverted_index,inverted_index_json)
