@@ -6,8 +6,9 @@ import operator
 app = Flask(__name__)
 
 class aDocument:
-	document = ""
-	total_tokens = 0
+	def __init__(self):
+		self.document = ""
+		self.total_tokens = 0
 
 def parseTerms(query):
 	#do something here
