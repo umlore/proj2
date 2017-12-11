@@ -115,7 +115,7 @@ def frequencyWeight(weights, frequencies):
         for y in weights:
             #If the document is in weights, apply the modifier to it
             if x["document"] == y.document:
-                y.rank += x["clicks"]/10%10
+                y.rank += x["clicks"]/10
     return weights
 
 @app.route('/ranking', methods=['POST'])
