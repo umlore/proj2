@@ -10,6 +10,7 @@ class aDocument:
     def __init__(self):
         self.document = ""
         self.total_tokens = 0
+        self.rank = 0
 
 def parseTerms(query):
     #do something here
@@ -104,6 +105,18 @@ def rankUrls(query, page_ranks, index):
     sorted_adocs = sorted(all_adocs, key=operator.attrgetter('total_tokens'), reverse=True)
 
     return sorted_adocs
+
+#Given a list of documents that have been run through rankURLs
+#and a list of dictionaries containing {document,number of clicks}
+#that would be received from querying,
+#Add an appropriate score modifier
+def frequencyWeight(weights, frequencies):
+    for x in frequencies:
+        for y in weights:
+            #If the document is in weights, apply the modifier to it
+            if x["document"] == y.document:
+                y.rank += x["clicks"]/10%10
+    return weights
 
 @app.route('/ranking', methods=['POST'])
 def search():
