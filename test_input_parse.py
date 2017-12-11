@@ -3,7 +3,7 @@ import requests
 import json
 
 #Import parsing functions to test
-from rank import parseQueryJson, parseIndexTermsFromQuery, parseJsonFromIndex
+from rank import parseQueryJson, parseIndexTermsFromQuery, parseJsonFromIndex, parseJsonFromLinkAnalysis
 
 #Testing for input parsing from other groups
 #Calls will be made directly from rank.py functions ignoring POST and GET calls
@@ -292,5 +292,90 @@ json_equals_dict = None == parse_query_result
 
 #Write pass/fail results to output file
 f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict) 
+
+
+
+
+'''
+THIS TEST BLOCK IS FOR TESTING THE parseJsonFromLinkAnalysis METHOD
+
+'''
+f.write("RESULTS FOR TESTING parseJsonFromLinkAnalysis: \n")
+
+# ==============================
+# TEST 1: Testing basic query 
+# ==============================
+
+# Create dummy data (dictionary)
+query_dict = {
+   "webpages" : [
+        {
+        "webpage": "www.example.com",
+        "pageRankValue": 2000,
+        "dateLastUpdated": "yyyy-mm-dd",
+        "frequency": "daily",
+        },
+        {
+        "webpage": "www.otherexample.com",
+        "pageRankValue": 28700,
+        "dateLastUpdated": "yyyy-mm-dd",
+        "frequency": "never",
+        },
+        {
+        "webpage": "www.fastnewz.com",
+        "pageRankValue": 0,
+        "dateLastUpdated": "yyyy-mm-dd",
+        "frequency": "hourly",
+        }
+    ]
+}
+
+json_query = query_dict
+
+#Pass it into the parsing method
+parse_query_result = parseJsonFromLinkAnalysis(json_query)
+
+#Compare output to original input dictionary to make sure they are the same
+json_equals_dict = query_dict == parse_query_result
+
+#Write pass/fail results to output file
+f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict) 
+
+# ==============================
+# TEST 2: Testing empty query 
+# ==============================
+
+# Create dummy data (dictionary)
+query_dict = {
+   "webpages" : []
+}
+
+json_query = query_dict
+
+#Pass it into the parsing method
+parse_query_result = parseJsonFromLinkAnalysis(json_query)
+
+#Compare output to original input dictionary to make sure they are the same
+json_equals_dict = query_dict == parse_query_result
+
+#Write pass/fail results to output file
+f.write("----- Test 2 -----\nTest Passed: %r\n" % json_equals_dict) 
+
+# ==============================
+# TEST 3: Testing empty input 
+# ==============================
+
+# Create dummy data (dictionary)
+query_dict = None
+
+#Pass it into the parsing method
+parse_query_result = parseJsonFromLinkAnalysis(query_dict)
+
+#Compare output to original input dictionary to make sure they are the same
+json_equals_dict = None == parse_query_result
+
+#Write pass/fail results to output file
+f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict) 
+
 
 f.close()
