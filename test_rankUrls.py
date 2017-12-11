@@ -45,3 +45,10 @@ for doc in sorted_adocs:
     print(doc.document)
 print('\n')
 #  print(sorted_adocs[0].document)
+
+from rankURL_test6 import queries, page_rank, inverted_index
+sorted_adocs = rankUrls(queries, page_rank, inverted_index)
+for doc in sorted_adocs:
+    print(doc.document)
+print('\n')
+#  print(sorted_adocs[0].document)
