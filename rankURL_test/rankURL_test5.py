@@ -4,7 +4,7 @@
 # three webpages. The first 2 has all the same data 
 # except the second one has high pageRank, while in the 3rd one
 # no target ngrams exist. 
-# rankURL should give the second webpage a higher rank
+# rankURL should put the second webpage "www.anotherexample.com" a higher rank
 
 queries = {
    'search_id': 2,
@@ -33,9 +33,9 @@ page_rank = {
             'pageRankValue': 20,
             'dateLastUpdated': "2017-11-22",
             'frequency': 'daily'
-        }
+        },
         {
-            'webpage': "www.example-5.com",
+            'webpage': "www.example-3.com",
             'pageRankValue': 20,
             'dateLastUpdated': "2017-11-22",
             'frequency': 'daily'
@@ -44,17 +44,19 @@ page_rank = {
 }
 
 inverted_index = {
-    returnCode: 1,
-    error: NULL,
-    documents: [
+    'returnCode': 1,
+    'error': '',
+    'documents': [
         {
             'documentID': 'www.example.com',
             'wordCount': 13,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
-                'fieldName': 'no idea what this is',
-                'rangeStart': 0,
-                'rangeEnd': 6
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 6
+                }
             ]
         },
         {
@@ -62,16 +64,30 @@ inverted_index = {
             'wordCount': 19,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
-                'fieldName': 'no idea what this is',
-                'rangeStart': 0,
-                'rangeEnd': 6
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 6
+                }
+            ]
+        },
+        {
+            'documentID': 'www.example-3.com',
+            'wordCount': 5,
+            'pageLastIndexed': '2017-11-22',
+            'importantTokenRanges': [
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 0
+                }
             ]
         }
     ],
-    tokens: [
+    'tokens': [
         {
             'token': 'our',
-            'ngramSize': 4,
+            'ngramSize': 1,
             'documentOccurences': [
                 {
                     'documentID': 'www.example.com',
@@ -79,7 +95,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1]
+                    'locations': [1, 2, 3]
                 },
             ]
         },
@@ -93,7 +109,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1]
+                    'locations': [1, 2, 3]
                 },
             ]
         },
@@ -107,7 +123,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1]
+                    'locations': [1, 2, 3]
                 }
             ]
         },
@@ -121,7 +137,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1]
+                    'locations': [1, 2, 3]
                 }
             ]
         },
@@ -135,7 +151,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1]
+                    'locations': [1, 2, 3]
                 }
             ]
         },
@@ -149,7 +165,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1]
+                    'locations': [1, 2, 3]
                 }
             ]
         },

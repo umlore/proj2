@@ -2,7 +2,7 @@
 #  All the inputs are supposed to be of dictionary
 
 # two webpages with all the same data but target words occurence.
-# rankURL should give the second webpage a higher rank
+# rankURL should put the second webpage "www.anotherexample.com" a higher rank
 
 queries = {
    'search_id': 2,
@@ -44,9 +44,11 @@ inverted_index = {
             'wordCount': 13,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
-                'fieldName': 'no idea what this is',
-                'rangeStart': 0,
-                'rangeEnd': 6
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 6
+                }
             ]
         },
         {
@@ -54,16 +56,18 @@ inverted_index = {
             'wordCount': 19,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
-                'fieldName': 'no idea what this is',
-                'rangeStart': 0,
-                'rangeEnd': 6
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 6
+                }
             ]
         }
     ],
-    tokens: [
+    'tokens': [
         {
             'token': 'our',
-            'ngramSize': 4,
+            'ngramSize': 1,
             'documentOccurences': [
                 {
                     'documentID': 'www.example.com',
@@ -71,7 +75,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1, 2, 2]
+                    'locations': [1, 2, 3]
                 },
             ]
         },
@@ -85,7 +89,7 @@ inverted_index = {
                 },
                 {
                     'documentID': 'www.anotherexample.com',
-                    'locations': [1, 2, 2]
+                    'locations': [1, 2, 3]
                 },
             ]
         },

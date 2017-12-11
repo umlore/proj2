@@ -97,7 +97,8 @@ def rankUrls(query, page_ranks, index):
 			temp.total_tokens += len(val)
 		all_adocs.append(temp)
 
-	sorted_adocs = sorted(doc, key=operator.attrgetter('total_tokens'))
+	#  sorted_adocs = sorted(doc, key=operator.attrgetter('total_tokens'))
+	sorted_adocs = sorted(all_adocs, key=operator.attrgetter('total_tokens'))
 
 	return sorted_adocs
 

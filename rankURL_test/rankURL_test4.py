@@ -29,19 +29,21 @@ page_rank = {
 }
 
 inverted_index = {
-    returnCode: 1,
-    error: NULL,
-    documents: [
+    'returnCode': 1,
+    'error': '',
+    'documents': [
         {
             'documentID': 'www.example-3.com',
             'wordCount': 5,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
-                'fieldName': 'no idea what this is',
-                'rangeStart': 0,
-                'rangeEnd': 0
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 0
+                }
             ]
         }
     ],
-    tokens: []
+    'tokens': []
 }
