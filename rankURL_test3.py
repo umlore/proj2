@@ -1,6 +1,8 @@
 #  rankURL(query, page_rank, inverted_index)
 #  All the inputs are supposed to be of dictionary
 
+# two webpages with all the same data but the second one has high pageRank. rankURL should give the second webpage a higher rank
+
 queries = {
    'search_id': 2,
    'raw': {
@@ -22,6 +24,12 @@ page_rank = {
             'pageRankValue': 10,
             'dateLastUpdated': "2017-11-22",
             'frequency': 'daily'
+        },
+        {
+            'webpage': "www.anotherexample.com",
+            'pageRankValue': 20,
+            'dateLastUpdated': "2017-11-22",
+            'frequency': 'daily'
         }
     ]
 }
@@ -39,15 +47,29 @@ inverted_index = {
                 'rangeStart': 0,
                 'rangeEnd': 6
             ]
+        },
+        {
+            'documentID': 'www.anotherexample.com',
+            'wordCount': 19,
+            'pageLastIndexed': '2017-11-22',
+            'importantTokenRanges': [
+                'fieldName': 'no idea what this is',
+                'rangeStart': 0,
+                'rangeEnd': 6
+            ]
         }
     ],
     tokens: [
         {
             'token': 'our',
-            'ngramSize': 1,
+            'ngramSize': 4,
             'documentOccurences': [
                 {
                     'documentID': 'www.example.com',
+                    'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
                     'locations': [1]
                 },
             ]
@@ -61,7 +83,7 @@ inverted_index = {
                     'locations': [1]
                 },
                 {
-                    'documentID': 'www.example.com',
+                    'documentID': 'www.anotherexample.com',
                     'locations': [1]
                 },
             ]
@@ -73,6 +95,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1]
                 }
             ]
         },
@@ -82,6 +108,10 @@ inverted_index = {
             'documentOccurences': [
                 {
                     'documentID': 'www.example.com',
+                    'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
                     'locations': [1]
                 }
             ]
@@ -93,6 +123,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1]
                 }
             ]
         },
@@ -102,6 +136,10 @@ inverted_index = {
             'documentOccurences': [
                 {
                     'documentID': 'www.example.com',
+                    'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
                     'locations': [1]
                 }
             ]
