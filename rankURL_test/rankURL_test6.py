@@ -10,7 +10,7 @@ queries = {
    'search_id': 17,
    'raw': {
        'raw_search': 'how to make huge profits',
-       'raw_search': ['how', 'to', 'make', 'huge', 'profits']
+       'raw_tokens': ['how', 'to', 'make', 'huge', 'profits']
    },
    'transformed': {
        'transformed_search': 'make huge profits',
@@ -102,7 +102,7 @@ inverted_index = {
         },
         {
             'documentID': 'https://www.lucre.zone',
-            'wordCount': 19993,
+            'wordCount': 2993,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
                 {

@@ -121,6 +121,9 @@ def search():
     # urls_request = urls
     headers = {"Content-Type": "application/json"}
 
+    print("\nTHIS IS THE QUERY WOWW\n")
+    print(query)
+
     #Turn all query content into one big set to send to indexing
 
     #TODO: figure out what to use other than just raw_tokens
@@ -181,7 +184,7 @@ def search():
         ]
     }
 
-    return jsonify(dummy_return)
+    return (dummy_return)
 
 
 @app.route('/test', methods=['POST'])
