@@ -8,6 +8,8 @@ updated_query_request = '{"search_id":69,"raw":{"raw_search":"query test example
 
 inverted_index_json = requests.post('http://teamthorn.cs.rpi.edu:5000/ranking', data=updated_query_request, headers=the_headers, timeout=1.000)
 
+#inverted_index_json = requests.post('http://localhost:5000/ranking', data=updated_query_request, headers=the_headers, timeout=1.000)
+
 print(json.loads(inverted_index_json.content))
 
 f = open('testing.txt','w')

@@ -13,6 +13,54 @@ def parseTerms(query):
 	#do something here
 	return None
 
+def parseQueryJson(query_json):
+	#if post request is empty or incorrect, abort
+	if not query_json or not 'raw' in query_json:
+		return None;
+
+	#parse json query
+	query = {
+		"search_id": query_json["search_id"],
+		"raw": query_json["raw"],
+		"transformed": query_json["transformed"],
+	}
+
+	return query
+
+def parseIndexTermsFromQuery(query):
+	#if post request is empty or incorrect, abort
+	if not query or not 'raw' in query:
+		return None;
+
+	index_query = list(set(query["transformed"]["transformed_tokens"] +
+	query["transformed"]["transformed_bigrams"] + 
+	query["transformed"]["transformed_trigrams"]))
+
+	return index_query
+
+def parseJsonFromIndex(index_json):
+    #if post request is empty or incorrect, abort
+	if not index_json or not 'documents' in index_json:
+		return None;
+
+	index = {
+		"returnCode":index_json["returnCode"],
+		"error":index_json["error"],
+		"documents":index_json["documents"],
+		"tokens":index_json["tokens"]
+	}
+	return index
+
+def parseJsonFromLinkAnalysis(page_ranks_json):
+    #if post request is empty or incorrect, abort
+	if not page_ranks_json or not 'webpages' in page_ranks_json:
+		return None;
+
+	page_ranks = {
+		"webpages": page_ranks_json["webpages"]
+	}
+	return page_ranks
+
 # query - dic from querying team
 # result of what link analysis (check)
 # dictionary
@@ -52,33 +100,21 @@ def rankUrls(query, page_ranks, index):
 
 	return sorted_adocs
 
-
 @app.route('/ranking', methods=['POST'])
 def search():
-	#if post request is empty or incorrect, abort
-	if not request.json or not 'raw' in request.json:
-		return "Something Missing\n"
+	query = parseQueryJson(request.json)
+	if query == None:
+		return "Error: query not parseable"
 
 	print(request.url)
 
-	#parse json query
-	query = {
-		"search_id": request.json["search_id"],
-		"raw": request.json["raw"],
-		"transformed": request.json["transformed"],
-	}
-
-
-	raw_tokens = query["raw"]["raw_tokens"]
+	raw_tokens = parseIndexTermsFromQuery(query)
 
 	#todo: figure out the actual url of link analysis
 	# url_link_analysis = 'todo: url goes here'
 	# url_localHost = '/test'
 	# urls_request = urls
 	headers = {"Content-Type": "application/json"}
-
-	#r = requests.post('https://localhost:5000/test', data=json.dumps(urlsRequest), headers=headers, timeout=1.000)
-	#requests.get('https://localhost:5000/test', timeout=1.000)
 
 	#Turn all query content into one big set to send to indexing
 
@@ -106,27 +142,20 @@ def search():
 		return inverted_index_json['returnCode']
 	'''
 
-	#Dump received json to dictionary with the same format
-	# json.dump(inverted_index,inverted_index_json)
-
-	# error_code = requests.post("https://localhost:5000/test",data=json.dumps(inverted_index_json),headers=headers,timeout=1.000)
-	# print(error_code)
-
-	webpages = ["https://business.zone"] #TODO: generate this from the results of the 
-		#post to indexing from inverted_index_json
+	webpages = ["https://business.zone"] 
+	#TODO: generate this from the results of the post to indexing from inverted_index_json
 
 	page_rank_request = jsonify({"webpages": webpages})
 
 	'''
 	page_rank_json = requests.post('https://teamqq.cs.rpi.edu/pageRank', data=page_rank_request, headers=headers, timeout=1.000)
 	'''
-
-	#page_rank_result = request.json["webpages"] 
+	
 	#TODO: page_rank_request should be parsed from page_rank_json not request.json
 		#which is the querying request
 	
 
-	dummyReturn = {
+	dummy_return = {
 		"ID": 69,
 	    "ranking": [
 			{ 
@@ -147,7 +176,7 @@ def search():
 		]
 	}
 
-	return jsonify(dummyReturn)
+	return jsonify(dummy_return)
 
 
 @app.route('/test', methods=['POST'])
