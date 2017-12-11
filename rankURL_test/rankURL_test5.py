@@ -1,6 +1,11 @@
 #  rankURL(query, page_rank, inverted_index)
 #  All the inputs are supposed to be of dictionary
 
+# three webpages. The first 2 has all the same data 
+# except the second one has high pageRank, while in the 3rd one
+# no target ngrams exist. 
+# rankURL should put the second webpage "www.anotherexample.com" a higher rank
+
 queries = {
    'search_id': 2,
    'raw': {
@@ -22,26 +27,64 @@ page_rank = {
             'pageRankValue': 10,
             'dateLastUpdated': "2017-11-22",
             'frequency': 'daily'
+        },
+        {
+            'webpage': "www.anotherexample.com",
+            'pageRankValue': 20,
+            'dateLastUpdated': "2017-11-22",
+            'frequency': 'daily'
+        },
+        {
+            'webpage': "www.example-3.com",
+            'pageRankValue': 20,
+            'dateLastUpdated': "2017-11-22",
+            'frequency': 'daily'
         }
     ]
 }
 
 inverted_index = {
-    returnCode: 1,
-    error: NULL,
-    documents: [
+    'returnCode': 1,
+    'error': '',
+    'documents': [
         {
             'documentID': 'www.example.com',
             'wordCount': 13,
             'pageLastIndexed': '2017-11-22',
             'importantTokenRanges': [
-                'fieldName': 'no idea what this is',
-                'rangeStart': 0,
-                'rangeEnd': 6
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 6
+                }
+            ]
+        },
+        {
+            'documentID': 'www.anotherexample.com',
+            'wordCount': 19,
+            'pageLastIndexed': '2017-11-22',
+            'importantTokenRanges': [
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 6
+                }
+            ]
+        },
+        {
+            'documentID': 'www.example-3.com',
+            'wordCount': 5,
+            'pageLastIndexed': '2017-11-22',
+            'importantTokenRanges': [
+                {
+                    'fieldName': 'no idea what this is',
+                    'rangeStart': 0,
+                    'rangeEnd': 0
+                }
             ]
         }
     ],
-    tokens: [
+    'tokens': [
         {
             'token': 'our',
             'ngramSize': 1,
@@ -49,6 +92,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1, 2, 3]
                 },
             ]
         },
@@ -61,8 +108,8 @@ inverted_index = {
                     'locations': [1]
                 },
                 {
-                    'documentID': 'www.example.com',
-                    'locations': [1]
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1, 2, 3]
                 },
             ]
         },
@@ -73,6 +120,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1, 2, 3]
                 }
             ]
         },
@@ -83,6 +134,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1, 2, 3]
                 }
             ]
         },
@@ -93,6 +148,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1, 2, 3]
                 }
             ]
         },
@@ -103,6 +162,10 @@ inverted_index = {
                 {
                     'documentID': 'www.example.com',
                     'locations': [1]
+                },
+                {
+                    'documentID': 'www.anotherexample.com',
+                    'locations': [1, 2, 3]
                 }
             ]
         },
