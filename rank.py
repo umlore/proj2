@@ -11,6 +11,7 @@ class aDocument:
         self.document = ""
         self.total_tokens = 0
         self.rank = 0
+        self.positions = []
 
 def parseTerms(query):
     #do something here
@@ -122,7 +123,7 @@ def frequencyWeight(weights, frequencies):
         for y in weights:
             #If the document is in weights, apply the modifier to it
             if x["document"] == y.document:
-                y.rank += x["clicks"]/10
+                y.rank += x["clicks"] * 1.1
     #sort the returned list of docs by rank instead of total_tokens
     weights = sorted(all_adocs, key=operator.attrgetter('rank'), reverse=True)
     return weights
