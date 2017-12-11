@@ -48,7 +48,7 @@ inverted_index = {
                 'rangeStart': 0,
                 'rangeEnd': 6
             ]
-        }
+        },
         {
             'documentID': 'www.anotherexample.com',
             'wordCount': 19,
