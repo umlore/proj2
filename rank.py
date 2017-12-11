@@ -90,19 +90,9 @@ def rankUrls(query, page_ranks, index):
         for occ in tk['documentOccurences']:
             documents[occ['documentID']][tk['token']] = occ['locations']
 
-
-
-    print("DOCUMENTS: ")
-    print(documents)
-
     all_adocs = []
 
     for key, value in documents.items():
-        print("KEY: ")
-        print(key)
-        print("VALUE: ")
-        print(value)
-        print("\n")
         temp = aDocument()
         temp.document = key
         for k, val in value.items():
