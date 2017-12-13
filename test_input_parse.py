@@ -2,13 +2,13 @@ from flask import Flask, request, jsonify
 import requests
 import json
 
-#Import parsing functions to test
+# Import parsing functions to test
 from rank import parseIndexTermsFromQuery, parseJsonFromIndex, parseJsonFromLinkAnalysis
 
-#Testing for input parsing from other groups
-#Calls will be made directly from rank.py functions ignoring POST and GET calls
+# Testing for input parsing from other groups
+# Calls will be made directly from rank.py functions ignoring POST and GET calls
 
-f = open('testing_input_parse.txt','w')
+f = open('testing_input_parse.txt', 'w')
 
 '''
 THIS TEST BLOCK IS FOR TESTING THE parseIndexTermsFromQuery METHOD
@@ -17,88 +17,87 @@ THIS TEST BLOCK IS FOR TESTING THE parseIndexTermsFromQuery METHOD
 f.write("RESULTS FOR TESTING parseIndexTermsFromQuery: \n")
 
 # ==============================
-# TEST 1: Testing empty query 
+# TEST 1: Testing empty query
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = query_dict = {
-   'search_id': None,
-   'raw':
-   {
-       'raw_search': "",
-       'raw_tokens': []
-   },
-   'transformed':
-   {
-       'transformed_search': "",
-       'transformed_tokens': [],
-       'transformed_bigrams': [],
-       'transformed_trigrams': [],
-   }
+    'search_id': None,
+    'raw':
+    {
+        'raw_search': "",
+        'raw_tokens': []
+    },
+    'transformed':
+    {
+        'transformed_search': "",
+        'transformed_tokens': [],
+        'transformed_bigrams': [],
+        'transformed_trigrams': [],
+    }
 }
 
 # Create expected output list to compare to
 expected_output = list(set([]))
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseIndexTermsFromQuery(query_dict)
 
-#Compare output to expected output to make sure it's the same
+# Compare output to expected output to make sure it's the same
 result_equals_list = expected_output == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 1 -----\nTest Passed: %r\n" % result_equals_list) 
+# Write pass/fail results to output file
+f.write("----- Test 1 -----\nTest Passed: %r\n" % result_equals_list)
 
 # ==============================
-# TEST 2: Testing basic query 
+# TEST 2: Testing basic query
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = {
-   'search_id': 123,
-   'raw':
-   {
-       'raw_search': "dank memes website cat .gif",
-       'raw_tokens': ["dank", "memes", "website", "cat", ".gif"]
-   },
-   'transformed':
-   {
-       'transformed_search': "dank memes website cat gif",
-       'transformed_tokens': ["dank", "memes", "website", "cat", "gif"],
-       'transformed_bigrams': ["dank memes", "memes website", "cat gif"],
-       'transformed_trigrams': ["dank memes website", "cat gif website", "meme cat website", "meme gif website"],
-   }
+    'search_id': 123,
+    'raw':
+    {
+        'raw_search': "dank memes website cat .gif",
+        'raw_tokens': ["dank", "memes", "website", "cat", ".gif"]
+    },
+    'transformed':
+    {
+        'transformed_search': "dank memes website cat gif",
+        'transformed_tokens': ["dank", "memes", "website", "cat", "gif"],
+        'transformed_bigrams': ["dank memes", "memes website", "cat gif"],
+        'transformed_trigrams': ["dank memes website", "cat gif website", "meme cat website", "meme gif website"],
+    }
 }
 
 # Create expected output list to compare to
-expected_output = list(set(["dank", "memes", "website", "cat", "gif","dank memes", "memes website", "cat gif","dank memes website", "cat gif website", "meme cat website", "meme gif website"]))
+expected_output = list(set(["dank", "memes", "website", "cat", "gif", "dank memes", "memes website",
+                            "cat gif", "dank memes website", "cat gif website", "meme cat website", "meme gif website"]))
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseIndexTermsFromQuery(query_dict)
 
-#Compare output to expected output to make sure it's the same
+# Compare output to expected output to make sure it's the same
 result_equals_list = expected_output == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 2 -----\nTest Passed: %r\n" % result_equals_list) 
+# Write pass/fail results to output file
+f.write("----- Test 2 -----\nTest Passed: %r\n" % result_equals_list)
 
 # ==============================
-# TEST 3: Testing empty input 
+# TEST 3: Testing empty input
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = None
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseIndexTermsFromQuery(query_dict)
 
-#Compare output to expected output to make sure it's the same
+# Compare output to expected output to make sure it's the same
 result_equals_list = None == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 3 -----\nTest Passed: %r\n" % result_equals_list) 
-
-
+# Write pass/fail results to output file
+f.write("----- Test 3 -----\nTest Passed: %r\n" % result_equals_list)
 
 
 '''
@@ -108,7 +107,7 @@ THIS TEST BLOCK IS FOR TESTING THE parseJsonFromIndex METHOD
 f.write("RESULTS FOR TESTING parseIndexTermsFromQuery: \n")
 
 # ==============================
-# TEST 1: Testing basic query 
+# TEST 1: Testing basic query
 # ==============================
 
 # Create dummy data (dictionary)
@@ -141,7 +140,7 @@ query_dict = {
             "documentOccurences": [
                 {
                     "documentID": "dumbnerds.com",
-                    "locations": [1,666]
+                    "locations": [1, 666]
                 }
             ]
         },
@@ -151,7 +150,7 @@ query_dict = {
             "documentOccurences": [
                 {
                     "documentID": "dumbnerds.com",
-                    "locations": [10000,666000]
+                    "locations": [10000, 666000]
                 }
             ]
         }
@@ -160,17 +159,17 @@ query_dict = {
 
 json_query = query_dict
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseJsonFromIndex(json_query)
 
-#Compare output to original input dictionary to make sure they are the same
+# Compare output to original input dictionary to make sure they are the same
 json_equals_dict = query_dict == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict) 
+# Write pass/fail results to output file
+f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict)
 
 # ==============================
-# TEST 2: Testing empty query 
+# TEST 2: Testing empty query
 # ==============================
 
 # Create dummy data (dictionary)
@@ -183,32 +182,30 @@ query_dict = {
 
 json_query = query_dict
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseJsonFromIndex(json_query)
 
-#Compare output to original input dictionary to make sure they are the same
+# Compare output to original input dictionary to make sure they are the same
 json_equals_dict = query_dict == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 2 -----\nTest Passed: %r\n" % json_equals_dict) 
+# Write pass/fail results to output file
+f.write("----- Test 2 -----\nTest Passed: %r\n" % json_equals_dict)
 
 # ==============================
-# TEST 3: Testing empty input 
+# TEST 3: Testing empty input
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = None
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseJsonFromIndex(query_dict)
 
-#Compare output to original input dictionary to make sure they are the same
+# Compare output to original input dictionary to make sure they are the same
 json_equals_dict = None == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict) 
-
-
+# Write pass/fail results to output file
+f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict)
 
 
 '''
@@ -218,79 +215,79 @@ THIS TEST BLOCK IS FOR TESTING THE parseJsonFromLinkAnalysis METHOD
 f.write("RESULTS FOR TESTING parseJsonFromLinkAnalysis: \n")
 
 # ==============================
-# TEST 1: Testing basic query 
+# TEST 1: Testing basic query
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = {
-   "webpages" : [
+    "webpages": [
         {
-        "webpage": "www.example.com",
-        "pageRankValue": 2000,
-        "dateLastUpdated": "yyyy-mm-dd",
-        "frequency": "daily",
+            "webpage": "www.example.com",
+            "pageRankValue": 2000,
+            "dateLastUpdated": "yyyy-mm-dd",
+            "frequency": "daily",
         },
         {
-        "webpage": "www.otherexample.com",
-        "pageRankValue": 28700,
-        "dateLastUpdated": "yyyy-mm-dd",
-        "frequency": "never",
+            "webpage": "www.otherexample.com",
+            "pageRankValue": 28700,
+            "dateLastUpdated": "yyyy-mm-dd",
+            "frequency": "never",
         },
         {
-        "webpage": "www.fastnewz.com",
-        "pageRankValue": 0,
-        "dateLastUpdated": "yyyy-mm-dd",
-        "frequency": "hourly",
+            "webpage": "www.fastnewz.com",
+            "pageRankValue": 0,
+            "dateLastUpdated": "yyyy-mm-dd",
+            "frequency": "hourly",
         }
     ]
 }
 
 json_query = query_dict
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseJsonFromLinkAnalysis(json_query)
 
-#Compare output to original input dictionary to make sure they are the same
+# Compare output to original input dictionary to make sure they are the same
 json_equals_dict = query_dict == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict) 
+# Write pass/fail results to output file
+f.write("----- Test 1 -----\nTest Passed: %r\n" % json_equals_dict)
 
 # ==============================
-# TEST 2: Testing empty query 
+# TEST 2: Testing empty query
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = {
-   "webpages" : []
+    "webpages": []
 }
 
 json_query = query_dict
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseJsonFromLinkAnalysis(json_query)
 
-#Compare output to original input dictionary to make sure they are the same
+# Compare output to original input dictionary to make sure they are the same
 json_equals_dict = query_dict == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 2 -----\nTest Passed: %r\n" % json_equals_dict) 
+# Write pass/fail results to output file
+f.write("----- Test 2 -----\nTest Passed: %r\n" % json_equals_dict)
 
 # ==============================
-# TEST 3: Testing empty input 
+# TEST 3: Testing empty input
 # ==============================
 
 # Create dummy data (dictionary)
 query_dict = None
 
-#Pass it into the parsing method
+# Pass it into the parsing method
 parse_query_result = parseJsonFromLinkAnalysis(query_dict)
 
-#Compare output to original input dictionary to make sure they are the same
+# Compare output to original input dictionary to make sure they are the same
 json_equals_dict = None == parse_query_result
 
-#Write pass/fail results to output file
-f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict) 
+# Write pass/fail results to output file
+f.write("----- Test 3 -----\nTest Passed: %r\n" % json_equals_dict)
 
 
 f.close()

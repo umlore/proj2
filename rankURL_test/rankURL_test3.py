@@ -1,22 +1,22 @@
 #  rankURL(query, page_rank, inverted_index)
 #  All the inputs are supposed to be of dictionary
 
-# two webpages with all the same data but the second one has high pageRank. 
+# two webpages with all the same data but the second one has high pageRank.
 
 # rankURL should put the second webpage "www.anotherexample.com" a higher rank
 
 queries = {
-   'search_id': 2,
-   'raw': {
-       'raw_search': 'our first search',
-       'raw_search': ['our', 'first', 'search']
-   },
-   'transformed': {
-       'transformed_search': 'our first search',
-       'transformed_tokens': ['our', 'first', 'search'],
-       'transformed_bigrams': ['our first', 'first search'],
-       'transformed_trigrams': [ 'our first search' ]
-   }
+    'search_id': 2,
+    'raw': {
+        'raw_search': 'our first search',
+        'raw_search': ['our', 'first', 'search']
+    },
+    'transformed': {
+        'transformed_search': 'our first search',
+        'transformed_tokens': ['our', 'first', 'search'],
+        'transformed_bigrams': ['our first', 'first search'],
+        'transformed_trigrams': ['our first search']
+    }
 }
 
 page_rank = {
@@ -49,7 +49,7 @@ inverted_index = {
                     'fieldName': 'no idea what this is',
                     'rangeStart': 0,
                     'rangeEnd': 6
-                    }
+                }
             ]
         },
         {
@@ -61,7 +61,7 @@ inverted_index = {
                     'fieldName': 'no idea what this is',
                     'rangeStart': 0,
                     'rangeEnd': 6
-                    }
+                }
             ]
         }
     ],

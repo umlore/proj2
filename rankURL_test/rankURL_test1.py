@@ -2,17 +2,17 @@
 #  All the inputs are supposed to be of dictionary
 
 queries = {
-   'search_id': 2,
-   'raw': {
-       'raw_search': 'our first search',
-       'raw_search': ['our', 'first', 'search']
-   },
-   'transformed': {
-       'transformed_search': 'our first search',
-       'transformed_tokens': ['our', 'first', 'search'],
-       'transformed_bigrams': ['our first', 'first search'],
-       'transformed_trigrams': [ 'our first search' ]
-   }
+    'search_id': 2,
+    'raw': {
+        'raw_search': 'our first search',
+        'raw_search': ['our', 'first', 'search']
+    },
+    'transformed': {
+        'transformed_search': 'our first search',
+        'transformed_tokens': ['our', 'first', 'search'],
+        'transformed_bigrams': ['our first', 'first search'],
+        'transformed_trigrams': ['our first search']
+    }
 }
 
 page_rank = {

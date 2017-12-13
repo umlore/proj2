@@ -1,23 +1,23 @@
 #  rankURL(query, page_rank, inverted_index)
 #  All the inputs are supposed to be of dictionary
 
-# three webpages. The first 2 has all the same data 
+# three webpages. The first 2 has all the same data
 # except the second one has high pageRank, while in the 3rd one
-# no target ngrams exist. 
+# no target ngrams exist.
 # rankURL should put the second webpage "www.anotherexample.com" a higher rank
 
 queries = {
-   'search_id': 2,
-   'raw': {
-       'raw_search': 'our first search',
-       'raw_search': ['our', 'first', 'search']
-   },
-   'transformed': {
-       'transformed_search': 'our first search',
-       'transformed_tokens': ['our', 'first', 'search'],
-       'transformed_bigrams': ['our first', 'first search'],
-       'transformed_trigrams': [ 'our first search' ]
-   }
+    'search_id': 2,
+    'raw': {
+        'raw_search': 'our first search',
+        'raw_search': ['our', 'first', 'search']
+    },
+    'transformed': {
+        'transformed_search': 'our first search',
+        'transformed_tokens': ['our', 'first', 'search'],
+        'transformed_bigrams': ['our first', 'first search'],
+        'transformed_trigrams': ['our first search']
+    }
 }
 
 page_rank = {
