@@ -17,24 +17,6 @@ def parseTerms(query):
     #do something here
     return None
 
-def parseQueryJson(query_json):
-    #if post request is empty or incorrect, abort
-    #  if not query_json or not 'raw' in query_json:
-    #      return None;
-
-    #  print("caught parse query\n")
-    #  print(query_json)
-    #  #parse json query
-    #  query = {
-    #      "search_id": query_json["search_id"],
-    #      "raw": query_json["raw"],
-    #      "transformed": query_json["transformed"],
-    #  }
-    #
-    #  print("caught parse queryyyyyyyyyyy\n")
-    #  print(query)
-    return query_json
-
 def parseIndexTermsFromQuery(query):
     #if post request is empty or incorrect, abort
     if not query or not 'raw' in query:
@@ -68,6 +50,21 @@ def parseJsonFromLinkAnalysis(page_ranks_json):
         "webpages": page_ranks_json["webpages"]
     }
     return page_ranks
+
+def convertRankedAdocsToReturn(id, sorted_adocs):
+	sorted_output = {}
+	sorted_output['ID'] = id
+	sorted_output['ranking'] = []
+	for i in range(0, len(sorted_adocs)):
+		sorted_output['ranking'].append(
+			{
+				"url": sorted_adocs[i].document,
+				"rank": i,
+				"positions": sorted_adocs[i].positions
+			}
+		)
+
+	return sorted_output
 
 # query - dic from querying team
 # result of what link analysis (check)
@@ -109,7 +106,7 @@ def rankUrls(query, page_ranks, index):
     #  sorted_adocs = sorted(doc, key=operator.attrgetter('total_tokens'))
     sorted_adocs = sorted(all_adocs, key=operator.attrgetter('total_tokens'), reverse=True)
 
-    return sorted_adocs
+    return convertRankedAdocsToReturn(sorted_adocs)
 
 #Given a list of documents, set rank attribute equal to total_tokens
 #Helper function for frequency weight as to not disturb total_tokens count
@@ -134,73 +131,51 @@ def frequencyWeight(weights, frequencies):
 
 @app.route('/ranking', methods=['POST'])
 def search():
-    print("RANKING CALLED\n")
-    print(request)
-    print("REQUEST JSON:\n")
+    print("Computing ranking for input: ")
     print(request.json)
 
     query = json.loads(request.json)
     print("RAW: \n")
     print(query["raw"])
     
-    #  print(request.data)
-    #  query = parseQueryJson(json.load(request.json))
-    #  if query == None:
-    #      print("caught an error\n")
-    #      return json.dumps({})
-    #
-    #  print(request.url)
-    #
-    #  raw_tokens = parseIndexTermsFromQuery(query)
-    #
-    #  #todo: figure out the actual url of link analysis
-    #  # url_link_analysis = 'todo: url goes here'
-    #  # url_localHost = '/test'
-    #  # urls_request = urls
-    #  headers = {"Content-Type": "application/json"}
-    #
-    #  print("\nTHIS IS THE QUERY WOWW\n")
-    #  print(query)
-    #
-    #  #Turn all query content into one big set to send to indexing
-    #
-    #  #TODO: figure out what to use other than just raw_tokens
-    #  #query_set = set(query["query"] + query["ngrams"] + query["aliases"])
-    #  #query_set_list = list(query_set)
-    #
-    #  print(raw_tokens)
-    #
-    #  #TODO: confirm tokens is the correct key for this data
-    #  index_json_request = jsonify({"tokens": raw_tokens})
+    if query == None:
+        print("caught an error\n")
+        return json.dumps({})
+    
+    print(request.url)
+
+    #Turn all query content into one big set to send to indexing
+    raw_tokens = parseIndexTermsFromQuery(query)
+
+    headers = {"Content-Type": "application/json"}
+    
+    #create message to indexing
+    index_json_request = json.dumps({"tokens": raw_tokens})
     #
     #  #POST request to indexing to retreive inverted index for specified words
-    #  #TODO: figure out what the actual teamy endpoint is OR fuckin interface with a diff team
     #
-    #
-    #  '''
-    #  inverted_index_json = requests.post('https://teamy.cs.rpi.edu/index', data=index_json_request, headers=headers, timeout=1.000)
-    #  '''
-    #
-    #  '''
-    #  # Will need to convert json we recieve into actual structure
-    #  if(inverted_index_json['returnCode'] != 0):
-    #      print("An error occured (",inverted_index_json['error'],") with return code",inverted_index_json['returnCode'])
-    #      return inverted_index_json['returnCode']
-    #  '''
-    #
-    #  webpages = ["https://business.zone"]
-    #  #TODO: generate this from the results of the post to indexing from inverted_index_json
-    #
-    #  page_rank_request = jsonify({"webpages": webpages})
-    #
-    #  '''
-    #  page_rank_json = requests.post('https://teamqq.cs.rpi.edu/pageRank', data=page_rank_request, headers=headers, timeout=1.000)
-    #  '''
-    #
-    #  #TODO: page_rank_request should be parsed from page_rank_json not request.json
-        #which is the querying request
-    
+    inverted_index_json = requests.post('https://teamy.cs.rpi.edu/index', data=index_json_request, headers=headers, timeout=1.000)
 
+    index = inverted_index_json.content
+    
+    # Will need to convert json we recieve into actual structure
+    if(inverted_index_json['returnCode'] != 0):
+        print("An error occured (",inverted_index_json['error'],") with return code",inverted_index_json['returnCode'])
+        return inverted_index_json['returnCode']
+    
+    webpages = ["https://www.business.zone", "https://www.money.com"]
+    
+    page_rank_request = json.dumps({"webpages": webpages})
+    
+    page_rank_json = requests.post('https://teamqq.cs.rpi.edu/pageRank', data=page_rank_request, headers=headers, timeout=1.000)
+    
+    page_rank = page_rank_json.content
+
+    ranked_urls = rankUrls(query, page_rank, index)
+
+    return json.dumps(ranked_urls)
+    
+    '''
     dummy_return = {
         "ID": 69,
         "ranking": [
@@ -221,12 +196,8 @@ def search():
             }
         ]
     }
-
-    #  return dummy_return
-    #  return 'hello world!\n'
-    return json.dumps(dummy_return)
-    #  return json.dumps(dummy_return)
-
+    '''
+    #return json.dumps(dummy_return)
 
 @app.route('/test', methods=['POST'])
 def test():
