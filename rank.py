@@ -106,7 +106,7 @@ def rankUrls(query, page_ranks, index):
     #  sorted_adocs = sorted(doc, key=operator.attrgetter('total_tokens'))
     sorted_adocs = sorted(all_adocs, key=operator.attrgetter('total_tokens'), reverse=True)
 
-    return convertRankedAdocsToReturn(sorted_adocs)
+    return sorted_adocs
 
 #Given a list of documents, set rank attribute equal to total_tokens
 #Helper function for frequency weight as to not disturb total_tokens count
@@ -173,7 +173,9 @@ def search():
 
     ranked_urls = rankUrls(query, page_rank, index)
 
-    return json.dumps(ranked_urls)
+    ranked_urls_json = convertRankedAdocsToReturn(ranked_urls)
+
+    return json.dumps(ranked_urls_json)
     
     '''
     dummy_return = {
