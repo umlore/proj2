@@ -1,1 +1,0 @@
-curl -H "Content-Type: application/json" -X POST -d '{"query":["hello", "hi"],"ngrams":["hello"],"aliases":["hello","hell"]}' http://localhost:5000/ranking/ >error.html
