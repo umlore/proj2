@@ -72,18 +72,8 @@ def convertRankedAdocsToReturn(id, sorted_adocs):
 
     return sorted_output
 
-# query - dic from querying team
-# result of what link analysis (check)
-# dictionary
-
 
 def rankUrls(query, page_ranks, index):
-    # Check these
-    # 1. does it have all the query terms?
-    # 2. how many query terms does it match total?  including repeats?
-    # 3. adjacency: are the query terms close together?
-    # 4. multiply by some factor determined by page_rank for that url
-    # 5. come up with some way of multiplying by recency
 
     # parse out the webpages from indexing and get list of webpages from link analysis
     documents = {}
@@ -191,39 +181,6 @@ def search():
     ranked_urls_json = convertRankedAdocsToReturn(ranked_urls)
 
     return json.dumps(ranked_urls_json)
-
-    '''
-    dummy_return = {
-        "ID": 69,
-        "ranking": [
-            { 
-                "url": "www.url.com",
-                "rank": 1, 
-                "positions": {"query": [1, 55, 3000], "test": [5], "example": [2, 90]}
-            },
-            {
-                "url": "www.secondurl.com",
-                "rank": 2,
-                "positions": {"query": [34], "test": [34, 78, 989, 234325]}
-            },
-            {
-                "url": "www.business.zone",
-                "rank": 3,
-                "positions": {"example": [70, 80, 903, 1122]}
-            }
-        ]
-    }
-    '''
-    # return json.dumps(dummy_return)
-
-
-@app.route('/test', methods=['POST'])
-def test():
-
-    # prints out the entire json
-    print(request.json)
-
-    return "hello\n"
 
 
 if __name__ == '__main__':
